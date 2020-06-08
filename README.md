@@ -27,7 +27,7 @@
     </a>
     -->
     <br />
-    Performant & powerful <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties">CSS custom property</a> helpers & React hooks built with Typescript
+    Performant & powerful <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties">CSS custom property</a> helpers & <a href="https://reactjs.org/docs/hooks-intro.html">React hooks</a> built with <a href="https://www.typescriptlang.org/index.html">Typescript</a>
   </sup>
   <br />
   <br />
@@ -40,12 +40,6 @@
   <br />
   <br />
 </div>
-
-## Installation
-
-```
-yarn add react-style-vars
-```
 
 ## Resources
 
