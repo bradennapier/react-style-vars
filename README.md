@@ -2,7 +2,9 @@
   <h1>
     <br/>
     <br/>
-    🕴️
+    <p align="center">
+      <img src="docs/img/style.png" width="400" title="react-style-vars">
+    </p>
     <br />
     react-style-vars
     <br />
