@@ -47,3 +47,9 @@
 yarn add react-style-vars
 ```
 
+## Resources
+
+- [[caniuse] CSS Custom Property browser support table](https://caniuse.com/#search=custom%20properties)
+- [[CSS Tricks] Updating a CSS Variable with Javascript](https://css-tricks.com/updating-a-css-variable-with-javascript/)
+- [[CSS Tricks] Making Custom Properties (CSS Variables) More Dynamic](https://css-tricks.com/making-custom-properties-css-variables-dynamic/)
+- [[CSS Tricks] Breaking CSS Custom Properties out of :root Might Be a Good Idea](https://css-tricks.com/breaking-css-custom-properties-out-of-root-might-be-a-good-idea/)
