@@ -121,11 +121,52 @@ type Props<V extends { [key: string]: any }> = {
 
 > `setOnRoot` may only be defined on the top-level VariableProvider
 
-## Hooks
+## More Examples
+
+<details>
+<summary>Set variables on prop changes (styleVars prop)</summary>
+
+When we just have a simple use case and want the variables to be set whenever the `styleVars` change we can use the `styleVars` prop instead of `defaultStyleVars` and our component will watch and update.
+
+> Since we set `setOnRoot` our children will not be wrapped in a `div` at all.
+
+```tsx
+import React, { useLayoutEffect } from 'react';
+import VariableProvider, { useStyleVars } from 'react-style-vars';
+
+const textByViewSize = {
+  small: '12px',
+  medium: '14px',
+  large: '16px',
+}
+
+function App() {
+  const isViewSize = useIsViewSize();
+
+  const vars = React.useMemo(() => ({
+    myComponentTextSize: textByViewSize[isViewSize]
+  }), [isViewSize])
+
+  return (
+    <VariableProvider styleVars={vars} setOnRoot>
+      <div style={{ fontSize: 'var(--myComponentTextSize)' }}>
+        Hello
+      </div>
+    </VariableProvider>
+  )
+}
+```
+
+</details>
+
+<details>
+<summary>useStyleVars hook & context</summary>
 
 When using the context to change variable values, we can use the `useStyleVars` hooks to get our context.  Our context operates in a cascading manner by default, which mirrors CSS' default behavior.  This means that if we have 2 Providers as parents to the component using the hook and set a variable that is provided by both, the variable will be changed on the provider closest to us.
 
 > While the hooks provide the most control and most performant method for dynamically setting our variables, it is far less verbose to use the `styleVars` prop.  See the example below.
+
+> You can view the complete definition for `CSSVariableContext` [here](https://github.com/bradennapier/react-style-vars/blob/master/src/utils/types.ts#L50)
 
 ### Type Signature
 
@@ -179,39 +220,6 @@ function App() {
   )
 }
 ```
-
-The same could be achieved by utilizing a fully dynamic variable provider.  This may be useful in some cases where we only have a few CSS Variables that we are working with.
-
-<details>
-<summary>Dynamic Variable Values (styleVars prop)</summary>
-
-```tsx
-import React, { useLayoutEffect } from 'react';
-import VariableProvider, { useStyleVars } from 'react-style-vars';
-
-const textByViewSize = {
-  small: '12px',
-  medium: '14px',
-  large: '16px',
-}
-
-function App() {
-  const isViewSize = useIsViewSize();
-
-  const vars = React.useMemo(() => ({
-    myComponentTextSize: textByViewSize[isViewSize]
-  }), [isViewSize])
-
-  return (
-    <VariableProvider styleVars={vars} setOnRoot>
-      <div style={{ fontSize: 'var(--myComponentTextSize)' }}>
-        Hello
-      </div>
-    </VariableProvider>
-  )
-}
-```
-
 </details>
 
 ## Resources
