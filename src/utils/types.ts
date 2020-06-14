@@ -90,6 +90,8 @@ export type CSSVariableContext<
      * Indicate whether the flattened object is an object of actual var names to set, allowing us to
      * skip checking the var and formatting it on each iteration.  If this is not defined or false it will
      * check and format as needed.
+     *
+     * @default false
      */
     isFlattenedAndFormatted?: boolean,
   ) => void;
@@ -98,26 +100,32 @@ export type CSSVariableContext<
     /**
      * When set to true it indicates that the provided changes are already flattened
      * allowing the flattenVariables step to be skipped.
+     *
+     * @default false
      */
     isFlattened?: boolean,
     /**
      * Indicate whether the flattened object is an object of actual var names to set, allowing us to
      * skip checking the var and formatting it on each iteration.  If this is not defined or false it will
      * check and format as needed.
+     *
+     * @default false
      */
     isFlattenedAndFormatted?: boolean,
   ) => void;
   setStyleVar: (
     /**
-     * Set the varName to set, either '--myVarName' or 'myVarName' works.  This should be the flattened var name which will be converted
-     * such that { foo: { bar: { width: '200px' } } } --> '--fooBarWidth'
+     * Set the varName to set, either '--myVarName' or 'myVarName' works.  This should be the flattened
+     * var name which will be converted such that `{ foo: { bar: { width: '200px' } } }` --> `--fooBarWidth`
      */
     name: string,
     value: string | null,
     priority?: string | undefined,
     /**
-     * Optionally provide whether the name provided has already been formatted as '--varName' so we do not need to check and format if
-     * needed.  If this is false or undefined the string will be checked and formatted if necessary.
+     * Optionally provide whether the names provided have already been
+     * formatted as `--varName` so we do not need to check and format if
+     * needed.  If this is false or undefined the string will be checked
+     * and formatted if necessary.
      */
     isNameFormatted?: boolean,
   ) => boolean;
@@ -130,12 +138,18 @@ export type CSSVariableContext<
      */
     refToUse: HTMLElement,
     /**
-     * Set the varName to set, either '--myVarName' or 'myVarName' works.  This should be the flattened var name which will be converted
-     * such that { foo: { bar: { width: '200px' } } } --> '--fooBarWidth'
+     * Set the varName to set, either '--myVarName' or 'myVarName' works.  This should be the flattened
+     * var name which will be converted such that `{ foo: { bar: { width: '200px' } } }` --> `--fooBarWidth`
      */
     name: string,
     value: string | null,
     priority?: string,
+    /**
+     * Optionally provide whether the names provided have already been
+     * formatted as `--varName` so we do not need to check and format if
+     * needed.  If this is false or undefined the string will be checked
+     * and formatted if necessary.
+     */
     isNameFormatted?: boolean,
   ) => boolean;
 
@@ -149,10 +163,16 @@ export type CSSVariableContext<
      */
     refToUse: HTMLElement,
     /**
-     * Set the varName to set, either '--myVarName' or 'myVarName' works.  This should be the flattened var name which will be converted
-     * such that { foo: { bar: { width: '200px' } } } --> '--fooBarWidth'
+     * Set the varName to set, either '--myVarName' or 'myVarName' works.  This should be the flattened
+     * var name which will be converted such that `{ foo: { bar: { width: '200px' } } }` --> `--fooBarWidth`
      */
     name: string,
+    /**
+     * Optionally provide whether the names provided have already been
+     * formatted as `--varName` so we do not need to check and format if
+     * needed.  If this is false or undefined the string will be checked
+     * and formatted if necessary.
+     */
     isNameFormatted?: boolean,
   ) => string | undefined;
 
@@ -162,15 +182,17 @@ export type CSSVariableContext<
    */
   setNearestDefinedStyleVar: (
     /**
-     * Set the varName to set, either '--myVarName' or 'myVarName' works.  This should be the flattened var name which will be converted
-     * such that { foo: { bar: { width: '200px' } } } --> '--fooBarWidth'
+     * Set the varName to set, either '--myVarName' or 'myVarName' works.  This should be the flattened
+     * var name which will be converted such that `{ foo: { bar: { width: '200px' } } }` --> `--fooBarWidth`
      */
     name: string,
     value: string | null,
     priority?: string | undefined,
     /**
-     * Optionally provide whether the name provided has already been formatted as '--varName' so we do not need to check and format if
-     * needed.  If this is false or undefined the string will be checked and formatted if necessary.
+     * Optionally provide whether the names provided have already been
+     * formatted as `--varName` so we do not need to check and format if
+     * needed.  If this is false or undefined the string will be checked
+     * and formatted if necessary.
      */
     isNameFormatted?: boolean,
   ) => boolean;
@@ -180,8 +202,8 @@ export type CSSVariableContext<
    */
   setRootStyleVar: (
     /**
-     * Set the varName to set, either '--myVarName' or 'myVarName' works.  This should be the flattened var name which will be converted
-     * such that { foo: { bar: { width: '200px' } } } --> '--fooBarWidth'
+     * Set the varName to set, either '--myVarName' or 'myVarName' works.  This should be the flattened
+     * var name which will be converted such that `{ foo: { bar: { width: '200px' } } }` --> `--fooBarWidth`
      */
     name: string,
     value: string | null,
@@ -191,8 +213,10 @@ export type CSSVariableContext<
      */
     resetAncestors?: boolean,
     /**
-     * Optionally provide whether the name provided has already been formatted as '--varName' so we do not need to check and format if
-     * needed.  If this is false or undefined the string will be checked and formatted if necessary.
+     * Optionally provide whether the names provided have already been
+     * formatted as `--varName` so we do not need to check and format if
+     * needed.  If this is false or undefined the string will be checked
+     * and formatted if necessary.
      */
     isNameFormatted?: boolean,
   ) => boolean;
@@ -206,13 +230,15 @@ export type CSSVariableContext<
    */
   getNearestDefinedDefaultStyleVar: <T extends string | number | undefined>(
     /**
-     * Set the varName to set, either '--myVarName' or 'myVarName' works.  This should be the flattened var name which will be converted
-     * such that { foo: { bar: { width: '200px' } } } --> '--fooBarWidth'
+     * Set the varName to set, either '--myVarName' or 'myVarName' works.  This should be the flattened
+     * var name which will be converted such that `{ foo: { bar: { width: '200px' } } }` --> `--fooBarWidth`
      */
     name: string,
     /**
-     * Optionally provide whether the name provided has already been formatted as '--varName' so we do not need to check and format if
-     * needed.  If this is false or undefined the string will be checked and formatted if necessary.
+     * Optionally provide whether the names provided have already been
+     * formatted as `--varName` so we do not need to check and format if
+     * needed.  If this is false or undefined the string will be checked
+     * and formatted if necessary.
      */
     isNameFormatted?: boolean,
   ) => T;
@@ -226,13 +252,15 @@ export type CSSVariableContext<
    */
   getDefaultRootStyleVar: (
     /**
-     * Set the varName to set, either '--myVarName' or 'myVarName' works.  This should be the flattened var name which will be converted
-     * such that { foo: { bar: { width: '200px' } } } --> '--fooBarWidth'
+     * Set the varName to set, either '--myVarName' or 'myVarName' works.  This should be the flattened
+     * var name which will be converted such that `{ foo: { bar: { width: '200px' } } }` --> `--fooBarWidth`
      */
     name: string,
     /**
-     * Optionally provide whether the name provided has already been formatted as '--varName' so we do not need to check and format if
-     * needed.  If this is false or undefined the string will be checked and formatted if necessary.
+     * Optionally provide whether the names provided have already been
+     * formatted as `--varName` so we do not need to check and format if
+     * needed.  If this is false or undefined the string will be checked
+     * and formatted if necessary.
      */
     isNameFormatted?: boolean,
   ) => string | number | undefined;
@@ -246,13 +274,15 @@ export type CSSVariableContext<
    */
   getStyleVar: (
     /**
-     * Set the varName to set, either '--myVarName' or 'myVarName' works.  This should be the flattened var name which will be converted
-     * such that { foo: { bar: { width: '200px' } } } --> '--fooBarWidth'
+     * Set the varName to set, either '--myVarName' or 'myVarName' works.  This should be the flattened
+     * var name which will be converted such that `{ foo: { bar: { width: '200px' } } }` --> `--fooBarWidth`
      */
     name: string,
     /**
-     * Optionally provide whether the name provided has already been formatted as '--varName' so we do not need to check and format if
-     * needed.  If this is false or undefined the string will be checked and formatted if necessary.
+     * Optionally provide whether the names provided have already been
+     * formatted as `--varName` so we do not need to check and format if
+     * needed.  If this is false or undefined the string will be checked
+     * and formatted if necessary.
      */
     isNameFormatted?: boolean,
   ) => string | number | undefined;
@@ -260,6 +290,7 @@ export type CSSVariableContext<
   /**
    * Returns the in-memory cached values for all the CSS Variables currently set by the context.  The response will be
    * the flattened version of your variables properly formatted (such as `{ '--myVarName': 2, '--anotherVar': '10px' }`).
+   *
    * @note
    *  This does not make any dom requests
    */
@@ -278,13 +309,15 @@ export type CSSVariableContext<
    */
   getRootStyleVar: (
     /**
-     * Set the varName to set, either '--myVarName' or 'myVarName' works.  This should be the flattened var name which will be converted
-     * such that { foo: { bar: { width: '200px' } } } --> '--fooBarWidth'
+     * Set the varName to set, either '--myVarName' or 'myVarName' works.  This should be the flattened
+     * var name which will be converted such that `{ foo: { bar: { width: '200px' } } }` --> `--fooBarWidth`
      */
     name: string,
     /**
-     * Optionally provide whether the name provided has already been formatted as '--varName' so we do not need to check and format if
-     * needed.  If this is false or undefined the string will be checked and formatted if necessary.
+     * Optionally provide whether the names provided have already been
+     * formatted as `--varName` so we do not need to check and format if
+     * needed.  If this is false or undefined the string will be checked
+     * and formatted if necessary.
      */
     isNameFormatted?: boolean,
   ) => string | number | undefined;
@@ -295,13 +328,15 @@ export type CSSVariableContext<
    */
   getNearestDefinedContext(
     /**
-     * Set the varName to set, either '--myVarName' or 'myVarName' works.  This should be the flattened var name which will be converted
-     * such that { foo: { bar: { width: '200px' } } } --> '--fooBarWidth'
+     * Set the varName to set, either '--myVarName' or 'myVarName' works.  This should be the flattened
+     * var name which will be converted such that `{ foo: { bar: { width: '200px' } } }` --> `--fooBarWidth`
      */
     name: string,
     /**
-     * Optionally provide whether the name provided has already been formatted as '--varName' so we do not need to check and format if
-     * needed.  If this is false or undefined the string will be checked and formatted if necessary.
+     * Optionally provide whether the names provided have already been
+     * formatted as `--varName` so we do not need to check and format if
+     * needed.  If this is false or undefined the string will be checked
+     * and formatted if necessary.
      */
     isNameFormatted?: boolean,
   ): CSSVariableContext<any, any>;
@@ -321,8 +356,10 @@ export type CSSVariableContext<
      */
     names: N,
     /**
-     * Optionally provide whether the names provided have already been formatted as '--varName' so we do not need to check and format if
-     * needed.  If this is false or undefined the string will be checked and formatted if necessary.
+     * Optionally provide whether the names provided have already been
+     * formatted as `--varName` so we do not need to check and format if
+     * needed.  If this is false or undefined the string will be checked
+     * and formatted if necessary.
      */
     isNameFormatted?: boolean,
   ): {
@@ -338,20 +375,21 @@ export type CSSVariableContext<
    */
   removeStyleVarToRoot: (
     /**
-     * Set the varName to set, either '--myVarName' or 'myVarName' works.  This should be the flattened var name which will be converted
-     * such that { foo: { bar: { width: '200px' } } } --> '--fooBarWidth'
+     * Set the varName to set, either '--myVarName' or 'myVarName' works.  This should be the flattened
+     * var name which will be converted such that `{ foo: { bar: { width: '200px' } } }` --> `--fooBarWidth`
      */
     name: string,
     /**
-     * Optionally provide whether the name provided has already been formatted as '--varName' so we do not need to check and format if
-     * needed.  If this is false or undefined the string will be checked and formatted if necessary.
+     * Optionally provide whether the name provided has already been formatted as `--varName` so we do not
+     * need to check and format if needed.  If this is false or undefined the string will be checked and
+     * formatted if necessary.
      */
     isNameFormatted?: boolean,
   ) => boolean;
 
   /**
-   * Resets all variables in the nearest context to their initial values.  If removeNewKeys is set to `true` then any
-   * newly added values will also be removed
+   * Resets all variables in the nearest context to their initial values.
+   * If `removeNewKeys` is set to `true` then any newly added values will also be removed
    */
   resetAllNearestStyleVarsToInitial(
     /**
@@ -361,8 +399,8 @@ export type CSSVariableContext<
   ): void;
 
   /**
-   * Resets all style vars in the root context to their initial values.  If removeNewKeys is set to `true` then any
-   * newly added values will also be removed
+   * Resets all style vars in the root context to their initial values.
+   * If `removeNewKeys` is set to `true` then any newly added values will also be removed
    */
   resetAllRootStyleVarsToInitial(
     /**
@@ -372,9 +410,9 @@ export type CSSVariableContext<
   ): void;
 
   /**
-   * Resets all style vars from the nearest context up to root to their initial values.  This only iterates ancestors
-   * of the current context and does not iterate siblings.  If removeNewKeys is set to `true` then any
-   * newly added values will also be removed
+   * Resets all style vars from the nearest context up to root to their initial values.
+   * This only iterates ancestors of the current context and does not iterate siblings.
+   * If `removeNewKeys` is set to `true` then any newly added values will also be removed.
    */
   resetAllStyleVarsToInitial(
     /**
