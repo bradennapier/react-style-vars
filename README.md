@@ -43,6 +43,12 @@
   <br />
 </div>
 
+## Features
+
+- Easily handle cascading CSS Variables with rendering and setting at any level in the Component tree.
+- Efficiently get, set, or merge multiple variables without requiring react components to re-render.
+-
+
 ## Simple Example
 
 Below we render a simple static set of variables into the dom which is set a div wrapper which is set with the `display: contents` style so it should not affect any other styles that may wrap it.  These will not change at any point due to how it is configured.  It is the most performant method of rendering variables at the given component tree.
@@ -113,9 +119,13 @@ type Props<V extends { [key: string]: any }> = {
 
 > You must provide either `defaultStyleVars` or `styleVars` as well as `children`
 
+> `setOnRoot` may only be defined on the top-level VariableProvider
+
 ## Hooks
 
 When using the context to change variable values, we can use the `useStyleVars` hooks to get our context.  Our context operates in a cascading manner by default, which mirrors CSS' default behavior.  This means that if we have 2 Providers as parents to the component using the hook and set a variable that is provided by both, the variable will be changed on the provider closest to us.
+
+> While the hooks provide the most control and most performant method for dynamically setting our variables, it is far less verbose to use the `styleVars` prop.  See the example below.
 
 ### Type Signature
 
@@ -169,6 +179,40 @@ function App() {
   )
 }
 ```
+
+The same could be achieved by utilizing a fully dynamic variable provider.  This may be useful in some cases where we only have a few CSS Variables that we are working with.
+
+<details>
+<summary>Dynamic Variable Values (styleVars prop)</summary>
+
+```tsx
+import React, { useLayoutEffect } from 'react';
+import VariableProvider, { useStyleVars } from 'react-style-vars';
+
+const textByViewSize = {
+  small: '12px',
+  medium: '14px',
+  large: '16px',
+}
+
+function App() {
+  const isViewSize = useIsViewSize();
+
+  const vars = React.useMemo(() => ({
+    myComponentTextSize: textByViewSize[isViewSize]
+  }), [isViewSize])
+
+  return (
+    <VariableProvider styleVars={vars} setOnRoot>
+      <div style={{ fontSize: 'var(--myComponentTextSize)' }}>
+        Hello
+      </div>
+    </VariableProvider>
+  )
+}
+```
+
+</details>
 
 ## Resources
 
