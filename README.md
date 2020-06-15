@@ -222,6 +222,295 @@ function App() {
 ```
 </details>
 
+<details>
+<summary>60fps transitions with requestAnimationFrame</summary>
+
+This ends up transitioning on `grid-template-columns` to provide for an animated sidebar menu which pops in and out when controlled manually or by hover.
+
+> This example currently has a lot of implementation-specific details.  Need to simplify it down to remove that.
+
+```js
+
+import React, { ReactChild } from 'react';
+import { Link } from '@reach/router';
+
+import styled from '@emotion/styled';
+
+import config from 'config';
+// import VariableProvider, { useStyleVars } from 'react-style-vars';
+import { useStateModules } from 'shared/hooks/useStateModules';
+import { useGlobalStyleVars } from 'shared/hooks/useGlobalStyleVars';
+import { Selectors, StateActions } from 'shared/store/types';
+
+const Wrapper = styled.div`
+  grid-area: menu;
+  overflow: hidden;
+  background: var(--elementSidebarBackground, var(--backgroundBodyPrimary));
+  color: var(--elementSidebarTextColor, var(--textBodyPrimary));
+  border-right: var(--borderLight);
+  width: var(--elementSidebarWidth);
+  a {
+    color: var(--elementSidebarLinkColor, var(--textBodySecondary));
+    :hover {
+      color: var(--elementSidebarLinkHover, var(--textBodySecondaryHover));
+    }
+  }
+`;
+
+const ResourcesWrapper = styled.div<{ isOpened: boolean }>`
+  display: flex;
+  flex-direction: column;
+  transform: ${(props) =>
+    props.isOpened ? 'translateX(-150px)' : 'translateX(0)'};
+  transition: transform 1s ease;
+`;
+
+const ResourceWrapper = styled.div<{ sidebarWidth: string }>`
+  display: flex;
+  flex-direction: row;
+  width: ${(props) => `calc(${props.sidebarWidth} + 150px)` || '100%'};
+  /* width: var(--elementSidebarWidth); */
+
+  overflow: hidden;
+  white-space: nowrap;
+  height: 40px;
+  min-height: 40px;
+  flex: 1;
+  align-items: center;
+  cursor: pointer;
+  border-bottom: var(--borderLight);
+
+  & > a {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    text-indent: 10px;
+  }
+
+  & > :hover {
+    background-color: var(--backgroundBodyPrimary);
+  }
+`;
+
+const IconWrapper = styled.div`
+  > div {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    :first-of-type {
+      max-width: 50px;
+    }
+  }
+  display: flex;
+  max-width: 150px;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+`;
+
+function setMenuState(
+  styleVars: ReturnType<typeof useGlobalStyleVars>,
+  defaultWidth: number,
+  state: any,
+  onComplete: any,
+) {
+  const val = styleVars.getStyleVar('--elementSidebarWidth');
+  if (!val) {
+    throw new Error('[ERROR] | Menu | Unknown value for elementSidebarWidth');
+  }
+  let currentFrame: number;
+
+  let n =
+    typeof val === 'string' ? Number(val.substr(0, val.indexOf('p'))) : val;
+
+  const animate = () => {
+    if (state.shouldBeOpened) {
+      if (n === defaultWidth) {
+        cancelAnimationFrame(currentFrame);
+        onComplete();
+        return;
+      }
+      n += 10;
+      if (n >= defaultWidth) {
+        n = defaultWidth;
+      }
+    } else {
+      if (n <= 50) {
+        cancelAnimationFrame(currentFrame);
+        onComplete();
+        return;
+      }
+      n -= 10;
+    }
+    styleVars.setNearestDefinedStyleVar('--elementSidebarWidth', `${n}px`);
+    currentFrame = requestAnimationFrame(animate);
+  };
+
+  if (state.isInitialRender) {
+    onComplete();
+
+    if (state.isOpened) {
+      styleVars.setNearestDefinedStyleVar(
+        '--elementSidebarWidth',
+        `${defaultWidth}px`,
+      );
+    } else {
+      styleVars.setNearestDefinedStyleVar('--elementSidebarWidth', `0px`);
+    }
+  } else {
+    currentFrame = requestAnimationFrame(animate);
+  }
+
+  return () => {
+    cancelAnimationFrame(currentFrame);
+  };
+}
+
+function Resource({
+  children,
+  to,
+  sidebarWidth,
+}: {
+  to: string;
+  sidebarWidth: string;
+  children: ReactChild;
+}) {
+  return (
+    <ResourceWrapper sidebarWidth={sidebarWidth}>
+      <IconWrapper>
+        <div>{typeof children === 'string' ? children.substr(0, 1) : 'N'}</div>
+        <div />
+      </IconWrapper>
+      <Link
+        to={to}
+        getProps={(props) => {
+          let isCurrent: boolean = props.isPartiallyCurrent;
+          const path = props.location.pathname;
+          if (path.startsWith('/tokens')) {
+            if (path === '/tokens/quote' && to === '/tokens/quote') {
+              isCurrent = true;
+            } else if (path === '/tokens/quote') {
+              isCurrent = false;
+            }
+          }
+          return {
+            style: isCurrent
+              ? {
+                  color: 'steelblue',
+                  fontWeight: 'bold',
+                }
+              : undefined,
+          };
+        }}
+      >
+        {children}
+      </Link>
+    </ResourceWrapper>
+  );
+}
+
+function useTimedSidebarHover(
+  isOpened: boolean,
+  isToggleLocked: boolean,
+  setMenu: StateActions['setMenu'],
+) {
+  const timerRef = React.useRef<number>();
+
+  const onMouseEnter = React.useCallback(() => {
+    clearTimeout(timerRef.current);
+    if (!isOpened) {
+      timerRef.current = window.setTimeout(() => setMenu(true), 200);
+      return () => clearTimeout(timerRef.current);
+    }
+  }, [timerRef, isOpened]);
+
+  const onMouseLeave = React.useCallback(() => {
+    clearTimeout(timerRef.current);
+    if (isOpened && !isToggleLocked) {
+      clearTimeout(timerRef.current);
+      timerRef.current = window.setTimeout(() => setMenu(false), 1000);
+      return () => clearTimeout(timerRef.current);
+    }
+  }, [isOpened, isToggleLocked]);
+
+  return { onMouseEnter, onMouseLeave };
+}
+
+export default function Menu() {
+  const styles = useGlobalStyleVars();
+
+  const sidebarWidth: string = React.useMemo(
+    () =>
+      styles.getNearestDefinedDefaultStyleVar<string>('elementSidebarWidth'),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+
+  const defaultWidthN = React.useMemo(
+    () => Number(sidebarWidth.substr(0, sidebarWidth.indexOf('p'))),
+    [sidebarWidth],
+  );
+
+  const getState = React.useCallback(
+    (selectors: Selectors) => ({
+      isOpened: selectors.menuIsOpened,
+      menuState: selectors.menuController,
+    }),
+    [],
+  );
+
+  const getActions = React.useCallback(
+    (actions: StateActions) => ({
+      setMovingComplete: actions.setMovingComplete,
+      setMenu: actions.setMenu,
+    }),
+    [],
+  );
+
+  const {
+    state: { menuState },
+    actions,
+  } = useStateModules(getState, getActions);
+
+  const { onMouseEnter, onMouseLeave } = useTimedSidebarHover(
+    menuState.shouldBeOpened,
+    menuState.isToggleLocked,
+    actions.setMenu,
+  );
+
+  React.useEffect(() => {
+    if (
+      menuState.isInitialRender ||
+      menuState.isOpened !== menuState.shouldBeOpened ||
+      menuState.isMoving
+    ) {
+      return setMenuState(
+        styles,
+        defaultWidthN,
+        menuState,
+        actions.setMovingComplete,
+      );
+    }
+  }, [styles, menuState, actions.setMovingComplete, defaultWidthN]);
+
+  return (
+    <Wrapper onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+      <ResourcesWrapper isOpened={menuState.shouldBeOpened}>
+        {config.resources.map(([resource, { home }]) => (
+          <Resource to={home} key={resource} sidebarWidth={sidebarWidth}>
+            {resource}
+          </Resource>
+        ))}
+      </ResourcesWrapper>
+    </Wrapper>
+  );
+}
+
+```
+</details>
+
 ## Resources
 
 - [[caniuse] CSS Custom Property browser support table](https://caniuse.com/#search=custom%20properties)
