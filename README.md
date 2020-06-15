@@ -51,6 +51,8 @@
 - Make it easy to work with props-based changes without adding conditionals all over your application.
 - Optionally flatten deep objects `{ foo: { bar: { color: 'red', background: 'black' } } }` --> `var(--fooBarColor)` and `var(--fooBarBackground)`
 
+> Once Firefox finally supported `CSSOM` / [`CSS.registerProperty`](https://developer.mozilla.org/en-US/docs/Web/API/CSS/RegisterProperty) we will also support a far cleaner syntax allowing for variable transitions and type-friendly values for enhanced performance (aka `transition: --myVarName 1s ease`)
+
 ## Simple Example
 
 Below we render a simple static set of variables into the dom which is set a div wrapper which is set with the `display: contents` style so it should not affect any other styles that may wrap it.  These will not change at any point due to how it is configured.  It is the most performant method of rendering variables at the given component tree.
@@ -546,3 +548,5 @@ export default React.memo(function Menu() {
 - [[CSS Tricks] Updating a CSS Variable with Javascript](https://css-tricks.com/updating-a-css-variable-with-javascript/)
 - [[CSS Tricks] Making Custom Properties (CSS Variables) More Dynamic](https://css-tricks.com/making-custom-properties-css-variables-dynamic/)
 - [[CSS Tricks] Breaking CSS Custom Properties out of :root Might Be a Good Idea](https://css-tricks.com/breaking-css-custom-properties-out-of-root-might-be-a-good-idea/)
+- [[Houdini / FUTURE] Future support once Firefox and Safari catch up for what will be possible](https://css-houdini.rocks/animating-gradient/)
+- [[Houdini / FUTURE] More examples with the CSSOM/registerProperty API](https://bobrov.dev/blog/css-custom-properties-in-depth-part-2/)
