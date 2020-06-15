@@ -45,7 +45,8 @@
 
 ## Features
 
-- Easily handle cascading CSS Variables with rendering and setting at any level in the Component tree.
+- **Fast!**  Only renders when it needs to and directly interacts with properties when needed.  Uses an in-memory cache to respond immediately to `get` requests (unless requested otherwise).
+- Easily handle cascading CSS Variables with rendering and setting at any level in the Component tree.  `get` and `set` the values at the nearest defined provider or nearest/root directly.
 - Efficiently get, set, or merge multiple variables without requiring react components to re-render.
 - Theme like a boss.
 - Make it easy to work with props-based changes without adding conditionals all over your application.
