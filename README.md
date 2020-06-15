@@ -227,6 +227,8 @@ function App() {
 
 This ends up transitioning on `grid-template-columns` to provide for an animated sidebar menu which pops in and out when controlled manually or by hover.
 
+Note that no prop-based css is required as we use localized css variables for values which depend on the local component state and the global context to get values from the higher providers.
+
 > This example currently has a lot of implementation-specific details.  Need to simplify it down to remove that.
 
 > Had to remove the naming and icons since they are not yet licensed for public use ;-)
@@ -334,8 +336,7 @@ function setMenuState(
   }
   let currentFrame: number;
 
-  let n =
-    typeof val === 'string' ? Number(val.substr(0, val.indexOf('p'))) : val;
+  let n = val.substr(0, val.indexOf('p'))
 
   const animate = () => {
     if (state.shouldBeOpened) {
