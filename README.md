@@ -47,7 +47,9 @@
 
 - Easily handle cascading CSS Variables with rendering and setting at any level in the Component tree.
 - Efficiently get, set, or merge multiple variables without requiring react components to re-render.
--
+- Theme like a boss.
+- Make it easy to work with props-based changes without adding conditionals all over your application.
+- Optionally flatten deep objects `{ foo: { bar: { color: 'red', background: 'black' } } }` --> `var(--fooBarColor)` and `var(--fooBarBackground)`
 
 ## Simple Example
 
