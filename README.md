@@ -230,7 +230,6 @@ This ends up transitioning on `grid-template-columns` to provide for an animated
 > This example currently has a lot of implementation-specific details.  Need to simplify it down to remove that.
 
 ```js
-
 import React, { ReactChild } from 'react';
 import { Link } from '@reach/router';
 
@@ -377,11 +376,19 @@ function setMenuState(
   };
 }
 
-function Resource({ children, to }: { to: string; children: ReactChild }) {
+function Resource({
+  children,
+  to,
+  idx,
+}: {
+  to: string;
+  idx: number;
+  children: ReactChild;
+}) {
   return (
     <ResourceWrapper>
       <IconWrapper>
-        <div>{typeof children === 'string' ? children.substr(0, 1) : 'N'}</div>
+        <div>{idx}</div>
         <div />
       </IconWrapper>
       <Link
@@ -396,6 +403,8 @@ function Resource({ children, to }: { to: string; children: ReactChild }) {
               isCurrent = false;
             }
           }
+          // the object returned here is passed to the
+          // anchor element's props
           return {
             style: isCurrent
               ? {
@@ -510,8 +519,8 @@ export default React.memo(function Menu() {
     <VariableProvider styleVars={localStyleVars}>
       <Wrapper onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
         <ResourcesWrapper>
-          {config.resources.map(([resource, { home }]) => (
-            <Resource to={home} key={resource}>
+          {config.resources.map(([resource, { home }], idx) => (
+            <Resource to={home} key={resource} idx={idx}>
               {resource}
             </Resource>
           ))}
@@ -520,6 +529,7 @@ export default React.memo(function Menu() {
     </VariableProvider>
   );
 });
+
 
 
 ```
