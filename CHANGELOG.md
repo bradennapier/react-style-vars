@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/bradennapier/react-style-vars/compare/v1.1.1...v1.1.2) (2021-12-27)
+
+
+### Bug Fixes
+
+* force release 2 ([24cfeec](https://github.com/bradennapier/react-style-vars/commit/24cfeecb264c4431ba103807e11db6fdcb1fab9b))
+
 ## [1.1.1](https://github.com/bradennapier/react-style-vars/compare/v1.1.0...v1.1.1) (2020-06-14)
 
 
