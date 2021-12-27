@@ -1,18 +1,13 @@
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
-  parserOptions: {
-    project: './tsconfig.eslint.json',
-  },
   extends: [
     'react-app',
     'airbnb',
     'plugin:@typescript-eslint/recommended',
     'plugin:import/typescript',
     'prettier',
-    'prettier/@typescript-eslint',
     'plugin:prettier/recommended',
-    'prettier/react',
   ],
   env: {
     browser: true,
@@ -24,12 +19,14 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     'react/jsx-filename-extension': 'off',
     'react/jsx-props-no-spreading': 'off',
+    'react/require-default-props': 'off',
     'class-methods-use-this': 'off',
     'consistent-return': 'off',
     'no-restricted-syntax': 'off',
     'no-multi-assign': 'off',
     'no-use-before-define': 'off',
     'no-console': 'off',
+    'no-restricted-exports': 'off',
     'no-underscore-dangle': 'off',
     'no-useless-constructor': 'off',
     'prettier/prettier': 'error',
@@ -53,7 +50,7 @@ module.exports = {
   settings: {
     'import/resolver': {
       typescript: {
-        directory: 'tsconfig.json',
+        project: 'tsconfig.json',
       },
     },
   },
