@@ -326,7 +326,7 @@ export function useVariableContext<
     };
   }, [isRoot, parent, ref, styles, vars, config]);
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     if (!isInitialRenderRef.current && !config.isControlled) {
       return;
     }
