@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/bradennapier/react-style-vars/compare/v1.1.2...v1.1.3) (2021-12-27)
+
+
+### Bug Fixes
+
+* dont use useLayoutEffect ([6e1bf06](https://github.com/bradennapier/react-style-vars/commit/6e1bf062c9da5ff30574fc3bce87f807e5017470))
+
 ## [1.1.2](https://github.com/bradennapier/react-style-vars/compare/v1.1.1...v1.1.2) (2021-12-27)
 
 
