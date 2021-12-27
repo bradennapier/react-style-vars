@@ -1,4 +1,5 @@
 import React from 'react';
+import { getDocument } from '../utils/browser';
 
 import { CSSVariableContext } from '../utils/reactContext';
 import { useVariableContext } from '../hooks/useVariableContext';
@@ -116,7 +117,7 @@ export default React.memo(function CSSVariableProvider<
 
   const refToUse = React.useMemo(() => {
     if (setOnRoot) {
-      return document.documentElement;
+      return getDocument()?.documentElement ?? ref;
     }
     return ref;
   }, [ref, setOnRoot]);
