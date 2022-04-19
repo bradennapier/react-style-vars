@@ -1,3 +1,14 @@
+# [1.3.0](https://github.com/bradennapier/react-style-vars/compare/v1.2.0...v1.3.0) (2022-04-19)
+
+
+### Features
+
+* **register-property:** cause a deploy due to feature release ([61119d2](https://github.com/bradennapier/react-style-vars/commit/61119d27bb64fdc0576c21c94ead1cd42a4d8ce1))
+* add CSS.registerProperty capabilities ([86d385e](https://github.com/bradennapier/react-style-vars/commit/86d385e2980f72201460da1216781b8c7af0e1e7))
+* add varSeparator and default to - with title case false ([640fefd](https://github.com/bradennapier/react-style-vars/commit/640fefdf311198e4162f226ce48ad4488777e86d))
+* export RegisterProperty factory ([e6cd34e](https://github.com/bradennapier/react-style-vars/commit/e6cd34e70bc21782beed8092f443cb967c1019d5))
+* use getWindow() for ssr safety ([682d9f2](https://github.com/bradennapier/react-style-vars/commit/682d9f2f62cfb06f0e1c1b5a22f3618a4586ef98))
+
 # [1.2.0](https://github.com/bradennapier/react-style-vars/compare/v1.1.3...v1.2.0) (2022-04-19)
 
 
