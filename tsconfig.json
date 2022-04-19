@@ -17,18 +17,10 @@
     "noFallthroughCasesInSwitch": true,
     "downlevelIteration": true,
     "outDir": "lib",
-    "lib": [
-      "es2018",
-      "dom"
-    ],
+    "lib": ["es2021", "dom"],
     "baseUrl": "./src",
     "importHelpers": true
   },
   "include": ["src/**/*"],
-  "exclude": [
-    "node_modules",
-    "lib",
-    "esm",
-    "stories"
-  ]
+  "exclude": ["node_modules", "lib", "esm", "stories"]
 }

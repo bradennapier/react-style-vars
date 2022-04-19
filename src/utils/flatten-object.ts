@@ -1,3 +1,8 @@
+import {
+  isRegisterPropertyConfig,
+  registerPropertyIfPossible,
+} from './registerProperty';
+
 /**
  * Takes an object and reduces it so that it is a flat object of its keys
  * { one: { two: 'three' } } --> { oneTwo: 'three' }
@@ -21,7 +26,14 @@ export default function flattenObject(
       key = i !== 0 ? `${separator}${c}` : c;
     }
     if (value[c] !== undefined && value[c] !== null) {
-      if (typeof value[c] === 'object') {
+      const parsedValue = value[c];
+      const isParsedValueRegisterPropertyConfig = isRegisterPropertyConfig(
+        parsedValue,
+      );
+      if (
+        typeof value[c] === 'object' &&
+        !isParsedValueRegisterPropertyConfig
+      ) {
         flattenObject(
           value[c],
           separator,
@@ -36,8 +48,18 @@ export default function flattenObject(
           throw new Error(`flattenVars failed due to key conflict with ${key}`);
         }
 
-        // eslint-disable-next-line no-param-reassign
-        p[key] = value[c];
+        let valueToUse = parsedValue;
+
+        if (isParsedValueRegisterPropertyConfig) {
+          // register property if possible, do not continue parsing object.
+          valueToUse = parsedValue.initialValue;
+          registerPropertyIfPossible(key, parsedValue);
+        }
+
+        if (valueToUse) {
+          // eslint-disable-next-line no-param-reassign
+          p[key] = valueToUse;
+        }
       }
     }
 
