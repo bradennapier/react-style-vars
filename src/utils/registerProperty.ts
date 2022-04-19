@@ -46,11 +46,12 @@ export function registerPropertyIfPossible(
   name: string,
   config: RegisterPropertyConfigBranded,
 ) {
+  // not technically needed since we strip the obj at parse time, but redundancy is nice.
   if (!supportsRegisterProperty()) {
     return;
   }
   try {
-    CSS.registerProperty({
+    getWindow()?.CSS.registerProperty({
       inherits: false,
       ...config,
       name,
