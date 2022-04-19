@@ -17,7 +17,7 @@ export function useFlattenedObject(
             config.varSeparator,
             config.varTitleCase,
           ),
-    [config.isFlattened, vars],
+    [config.isFlattened, config.varSeparator, config.varTitleCase, vars],
   );
 
   return flattenedVars;
