@@ -52,7 +52,7 @@ export default function flattenObject(
 
         if (isParsedValueRegisterPropertyConfig) {
           // register property if possible, do not continue parsing object.
-          valueToUse = parsedValue.initialValue;
+          valueToUse = parsedValue.value ?? parsedValue.initialValue;
           registerPropertyIfPossible(key, parsedValue);
         }
 
