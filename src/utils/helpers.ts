@@ -18,7 +18,7 @@ export function* walkContexts(
 }
 
 export const getVarName = (name: string, isNameFormatted?: boolean) =>
-  isNameFormatted || name[0] === '-' ? name : `--${name}`;
+  isNameFormatted || name.startsWith('--') ? name : `--${name}`;
 
 export const getVarValue = (value: string | null | number): null | string =>
   value === null ? value : String(value);
@@ -44,8 +44,10 @@ export function getElementRef(
 
 export function createFlattenedStyleVarObject(
   vars: Record<string, any>,
+  separator = '',
+  titleCase = false,
 ): { [key: string]: string | number } {
-  const flattened = flattenObject(vars, true, '--');
+  const flattened = flattenObject(vars, separator, titleCase, '--');
   return flattened;
 }
 

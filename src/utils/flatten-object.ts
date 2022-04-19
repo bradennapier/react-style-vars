@@ -4,6 +4,7 @@
  */
 export default function flattenObject(
   value: Record<string, any>,
+  separator = '',
   toTitleCase = true,
   prefix = '',
   i = 0,
@@ -12,16 +13,23 @@ export default function flattenObject(
   return Object.keys(value).reduce((p, c) => {
     let key: string;
     if (toTitleCase && i !== 0) {
-      key = c.replace(
+      key = `${separator}${c.replace(
         /\w\S*/g,
         (txt) => txt.charAt(0).toUpperCase() + txt.substr(1),
-      );
+      )}`;
     } else {
-      key = c;
+      key = i !== 0 ? `${separator}${c}` : c;
     }
     if (value[c] !== undefined && value[c] !== null) {
       if (typeof value[c] === 'object') {
-        flattenObject(value[c], toTitleCase, `${prefix}${key}`, i + 1, p);
+        flattenObject(
+          value[c],
+          separator,
+          toTitleCase,
+          `${prefix}${key}`,
+          i + 1,
+          p,
+        );
       } else {
         key = prefix ? `${prefix}${key}` : key;
         if (Object.prototype.hasOwnProperty.call(p, key)) {
