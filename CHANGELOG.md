@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/bradennapier/react-style-vars/compare/v1.1.3...v1.2.0) (2022-04-19)
+
+
+### Features
+
+* add varSeparator and default to - with title case false ([#25](https://github.com/bradennapier/react-style-vars/issues/25)) ([4b0324f](https://github.com/bradennapier/react-style-vars/commit/4b0324f7d9eff27055bbe9a82e6fe3fe11577264))
+
 ## [1.1.3](https://github.com/bradennapier/react-style-vars/compare/v1.1.2...v1.1.3) (2021-12-27)
 
 
