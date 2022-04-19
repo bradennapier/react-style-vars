@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/bradennapier/react-style-vars/compare/v1.3.0...v1.3.1) (2022-04-19)
+
+
+### Bug Fixes
+
+* **register-property:** deploy commit providing property checking ([4f278e0](https://github.com/bradennapier/react-style-vars/commit/4f278e0e042e7b5c5e3e08db490deb6131f34c50))
+
 # [1.3.0](https://github.com/bradennapier/react-style-vars/compare/v1.2.0...v1.3.0) (2022-04-19)
 
 
