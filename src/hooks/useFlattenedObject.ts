@@ -9,7 +9,14 @@ export function useFlattenedObject(
   useDebugValue('[CSSVariableProvider] | useFlattenedObject');
 
   const flattenedVars = useMemo(
-    () => (config.isFlattened ? vars : createFlattenedStyleVarObject(vars)),
+    () =>
+      config.isFlattened
+        ? vars
+        : createFlattenedStyleVarObject(
+            vars,
+            config.varSeparator,
+            config.varTitleCase,
+          ),
     [config.isFlattened, vars],
   );
 

@@ -37,6 +37,21 @@ type Props<V extends { [key: string]: any }> = {
    * check and prefix the variable name with `--` if it hasn't been included.
    */
   isFlattenedAndFormatted?: boolean;
+  /**
+   * When defined, each segment of the object being flattened will include this value.  For example, { color: { main: 'red' } }
+   * would become '--color-main: red;'
+   *
+   * defaults to `-` unless varTitleCase is true (then it would default to `undefined`)
+   */
+  varSeparator?: string;
+  /**
+   * When defined, each segment of the object is transformed to title case.  For example, { color: { main: 'red' } }
+   * would become '--colorMain: red;'
+   *
+   * defaults to `false`, setting this to `true` will cause the varSeparator to be `undefined` by default
+   */
+  varTitleCase?: boolean;
+
   children: React.ReactNode;
 };
 
@@ -111,8 +126,22 @@ export default React.memo(function CSSVariableProvider<
       isFlattened: !vars ? true : !!isFlattened,
       isFlattenedAndFormatted: !vars ? true : !!isFlattenedAndFormatted,
       setOnRoot: !!setOnRoot,
+      varSeparator:
+        props.varTitleCase !== true && props.varSeparator === undefined
+          ? '-'
+          : props.varSeparator,
+      varTitleCase: !!props.varTitleCase,
     }),
-    [uid, vars, styleVars, isFlattened, isFlattenedAndFormatted, setOnRoot],
+    [
+      uid,
+      vars,
+      styleVars,
+      isFlattened,
+      isFlattenedAndFormatted,
+      setOnRoot,
+      props.varSeparator,
+      props.varTitleCase,
+    ],
   );
 
   const refToUse = React.useMemo(() => {

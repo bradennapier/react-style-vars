@@ -45,6 +45,8 @@ export type CSSVariableContextConfig = {
   isFlattened: boolean;
   isFlattenedAndFormatted: boolean;
   setOnRoot: boolean;
+  varSeparator?: string;
+  varTitleCase?: boolean;
 };
 
 export type CSSVariableContext<
