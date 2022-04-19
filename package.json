@@ -1,6 +1,6 @@
 {
   "name": "react-style-vars",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "description": "Performant & powerful CSS property helpers & hooks built with Typescript",
   "homepage": "https://github.com/bradennapier/react-style-vars#readme",
   "author": "Braden Napier <bradynapier@gmail.com>",
