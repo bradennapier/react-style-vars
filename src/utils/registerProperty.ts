@@ -79,10 +79,16 @@ export function registerPropertyIfPossible(
     });
   } catch (error) {
     if (process.env.NODE_ENV !== 'production') {
-      console.warn(
-        `Failed to register property: ${name} due to an error: `,
-        error,
-      );
+      if (error instanceof Error && error.name === 'InvalidModificationError') {
+        console.debug(
+          `[react-style-vars]: Property ${name} is already registered, skipping registration`,
+        );
+      } else {
+        console.warn(
+          `Failed to register property: ${name} due to an error: `,
+          error,
+        );
+      }
     }
   }
 }
