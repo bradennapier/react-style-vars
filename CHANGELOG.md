@@ -1,3 +1,11 @@
+## [1.3.2](https://github.com/bradennapier/react-style-vars/compare/v1.3.1...v1.3.2) (2022-04-20)
+
+
+### Bug Fixes
+
+* **register-property:** better handling of error logging for register property ([c127162](https://github.com/bradennapier/react-style-vars/commit/c1271626790d53958e32f23f91a5496d23745d81))
+* **register-property:** less verbose logging of warnings ([d2bcfc0](https://github.com/bradennapier/react-style-vars/commit/d2bcfc065bf10b3a91e5077ee693520c68a4f871))
+
 ## [1.3.1](https://github.com/bradennapier/react-style-vars/compare/v1.3.0...v1.3.1) (2022-04-19)
 
 
