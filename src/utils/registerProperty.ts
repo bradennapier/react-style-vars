@@ -78,10 +78,18 @@ export function registerPropertyIfPossible(
       initialValue: config.initialValue,
     });
   } catch (error) {
-    if (process.env.NODE_ENV !== 'production') {
+    if (
+      process.env.NODE_ENV !== 'production' &&
+      error instanceof Error &&
+      error.name !== 'InvalidModificationError'
+    ) {
       console.warn(
         `Failed to register property: ${name} due to an error: `,
         error,
+      );
+    } else if (process.env.NODE_ENV !== 'production') {
+      console.debug(
+        `[react-style-vars]: Property ${name} is already registered, skipping registration`,
       );
     }
   }
